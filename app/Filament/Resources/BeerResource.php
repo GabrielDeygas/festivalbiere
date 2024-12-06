@@ -69,7 +69,6 @@ class BeerResource extends Resource
                 ->required(),
             FileUpload::make('img')
                 ->label('Image de la bière')
-                ->directory('beers')
                 ->image()
                 ->nullable(),
         ]);

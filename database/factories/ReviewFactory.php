@@ -22,11 +22,21 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
+
+        do {
+            $user = User::inRandomOrder()->first();
+            $beer = Beer::inRandomOrder()->first();
+
+            $exists = \App\Models\Review::where('user_id', $user->id)
+                ->where('beer_id', $beer->id)
+                ->exists();
+        } while ($exists);
+
         return [
             'note' => $this->faker->numberBetween(1, 5),
             'description' => $this->faker->unique()->sentence(10),
-            'user_id' => User::inRandomOrder()->first()->id ?? null,
-            'beer_id' => Beer::inRandomOrder()->first()->id ?? null,
+            'user_id' => $user->id,
+            'beer_id' => $beer->id,
         ];
     }
 }

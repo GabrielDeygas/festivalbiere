@@ -13,6 +13,7 @@ class RecipeFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => $this->faker->words(3, true),
             'ingredients' => $this->faker->words(5, true),
             'steps' => $this->faker->paragraphs(3, true),
             'user_id' => User::inRandomOrder()->first()->id ?? null,
