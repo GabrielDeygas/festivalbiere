@@ -128,4 +128,16 @@ class BeerRepository
     {
         return Beer::count();
     }
+
+    /**
+     * Récupérer le nombre des différents types de bières
+     */
+    public function getBeerTypes()
+    {
+        $beerTypes = Beer::select('type', Beer::raw('COUNT(*) as count'))
+            ->groupBy('type')
+            ->get();
+
+        return $beerTypes;
+    }
 }

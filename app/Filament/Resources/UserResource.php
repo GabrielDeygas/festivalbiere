@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\IconColumn;
 
 class UserResource extends Resource
 {
@@ -47,7 +48,7 @@ class UserResource extends Resource
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('name')->label('Nom')->sortable()->searchable(),
                 TextColumn::make('email')->label('Email')->sortable()->searchable(),
-                BooleanColumn::make('email_verified_at')
+                IconColumn::make('email_verified_at')
                     ->label('Email vérifié')
                     ->sortable(),
                 TextColumn::make('created_at')

@@ -6,7 +6,7 @@
     <div class="container mx-auto p-4">
 
         <a href="{{ route('home') }}" class="mt-4 mb-4 inline-block p-2 bg-blue-500 text-white rounded hover:bg-gray-600">
-            Back to Beers
+            Revenir aux bières
         </a>
 
         <div class="bg-white p-6 rounded-lg shadow">
@@ -19,7 +19,7 @@
             <p class="text-gray-600 mb-2"><strong>Nombre d'avis:</strong> {{ $reviewCount }}</p>
 
             <p class="text-gray-600 mb-2">
-                <strong>Average Rating:</strong>
+                <strong>Note moyenne:</strong>
                 {{ $averageRating ? round($averageRating, 2) . ' ⭐' : 'Pas encore de note' }}
             </p>
         </div>
@@ -27,13 +27,13 @@
         @auth
             @if (!$userReview)
                 <div class="bg-gray-100 p-6 rounded-lg shadow mt-6">
-                    <h2 class="text-2xl font-bold mb-4">Leave a Review</h2>
+                    <h2 class="text-2xl font-bold mb-4">Laissez une note</h2>
 
                     <form method="POST" action="{{ route('beer.review.create', $beer->id) }}">
                         @csrf
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-medium">Your Rating (1 to 5):</label>
+                            <label class="block text-gray-700 font-medium">Votre note (1 to 5):</label>
                             <div class="flex space-x-1" id="stars">
                                 <span data-value="1" class="cursor-pointer text-gray-300 text-3xl transition duration-200">&#9733;</span>
                                 <span data-value="2" class="cursor-pointer text-gray-300 text-3xl transition duration-200">&#9733;</span>
@@ -42,18 +42,18 @@
                                 <span data-value="5" class="cursor-pointer text-gray-300 text-3xl transition duration-200">&#9733;</span>
                             </div>
                             <input type="hidden" name="note" id="note" value="0">
-                            <p class="text-red-500 text-sm hidden" id="error-message">Please select a rating</p>
+                            <p class="text-red-500 text-sm hidden" id="error-message">Veuillez sélectionner une note</p>
                         </div>
 
                         <div class="mb-4">
-                            <label for="description" class="block text-gray-700 font-medium">Your Comment:</label>
+                            <label for="description" class="block text-gray-700 font-medium">Votre commentaire:</label>
                             <textarea id="description" name="description" class="p-2 border rounded w-full" rows="3"></textarea>
                             @error('description')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
                         </div>
                         <button type="submit" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            Submit Review
+                            Envoyer
                         </button>
                     </form>
                 </div>
@@ -89,11 +89,11 @@
             @forelse ($reviews as $review)
                 <div class="mb-4 border-b pb-4">
                     <p class="text-gray-800"><strong>Note:</strong> {{ $review->note }} ⭐</p>
-                    <p class="text-gray-600"><strong>Comment:</strong> {{ $review->description }}</p>
-                    <p class="text-gray-500 text-sm">Reviewed by User ID: {{ $review->user->name }} on {{ $review->created_at->format('d M Y') }}</p>
+                    <p class="text-gray-600"><strong>Commentaire:</strong> {{ $review->description }}</p>
+                    <p class="text-gray-500 text-sm">Utilisateur: {{ $review->user->name }} on {{ $review->created_at->format('d M Y') }}</p>
                 </div>
             @empty
-                <p class="text-gray-600">No reviews yet.</p>
+                <p class="text-gray-600">Pas encore d'avis.</p>
             @endforelse
 
             <div class="mt-4">
@@ -102,7 +102,7 @@
         </div>
 
         <a href="{{ route('home') }}" class="mt-4 inline-block p-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-            Back to Beers
+            Retour aux bières
         </a>
     </div>
 

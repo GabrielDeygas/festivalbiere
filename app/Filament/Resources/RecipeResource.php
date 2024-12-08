@@ -24,6 +24,11 @@ class RecipeResource extends Resource
     {
         return $form
             ->schema([
+                Textarea::make('name')
+                    ->label('Nom de la recette')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Ecrivez le nom de la recette'),
                 Textarea::make('ingredients')
                     ->label('Ingrédients')
                     ->required()
@@ -62,7 +67,7 @@ class RecipeResource extends Resource
         ->filters([
             SelectFilter::make('user_id')
                 ->label('Utilisateur')
-                ->relationship('user', 'name') // Filtre basé sur la relation
+                ->relationship('user', 'name')
                 ->placeholder('Tous les utilisateurs'),
         ])
             ->actions([

@@ -5,13 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Beer;
 use App\Models\Review;
 use App\Models\User;
+use App\Repositories\BeerRepository;
+use App\Repositories\ReviewRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    
+    protected $beerRepo;
+    protected $reviewRepo;
+    protected $userRepo;
+
+    public function __construct(BeerRepository $beerRepo, ReviewRepository $reviewRepo, UserRepository $userRepo)
+    {
+        $this->beerRepo = $beerRepo;
+        $this->reviewRepo = $reviewRepo;
+        $this->userRepo = $userRepo;
+    }
+
     public function getTotalBeers()
     {
-        $totalBeers = Beer::count();
+        $totalBeers = $this->beerRepo->getTotalBeers();
 
         return response()->json([
             'total_beers' => $totalBeers
@@ -20,17 +35,16 @@ class DashboardController extends Controller
 
     public function getAverageRatingForAllBeers()
     {
-        $averageRating = Review::avg('note');
+        $averageRating =  $this->reviewRepo->getAverageRating();
 
         return response()->json([
             'average_rating' => round($averageRating, 2),
         ]);
     }
 
-
     public function getAverageRating($beerId)
     {
-        $averageRating = Review::where('beer_id', $beerId)->avg('note');
+        $averageRating = $this->reviewRepo->getAverageRatingByBeer($beerId);
 
         return response()->json([
             'beer_id' => $beerId,
@@ -40,7 +54,7 @@ class DashboardController extends Controller
 
     public function getTotalReviews()
     {
-        $totalReviews = Review::count();
+        $totalReviews = $this->reviewRepo->getTotalReviews();
 
         return response()->json([
             'total_reviews' => $totalReviews
@@ -49,7 +63,7 @@ class DashboardController extends Controller
 
     public function getReviewsByBeer($beerId)
     {
-        $totalReviews = Review::where('beer_id', $beerId)->count();
+        $totalReviews = $this->reviewRepo->getReviewCountByBeer($beerId);
 
         return response()->json([
             'beer_id' => $beerId,
@@ -59,7 +73,7 @@ class DashboardController extends Controller
 
     public function getTotalUsers()
     {
-        $totalUsers = User::count();
+        $totalUsers = $this->userRepo->getTotalUsers();
 
         return response()->json([
             'total_users' => $totalUsers
@@ -68,12 +82,8 @@ class DashboardController extends Controller
 
     public function getBeerTypes()
     {
-        $beerTypes = Beer::select('type', Beer::raw('COUNT(*) as count'))
-            ->groupBy('type')
-            ->get();
+        $beerTypes = $this->beerRepo->getBeerTypes();
 
         return response()->json($beerTypes);
     }
-
-
 }
