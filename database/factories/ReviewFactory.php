@@ -22,21 +22,27 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
+        static $usedPairs = [];
+
+        $userIds = User::pluck('id')->toArray();
+        $beerIds = Beer::pluck('id')->toArray();
 
         do {
-            $user = User::inRandomOrder()->first();
-            $beer = Beer::inRandomOrder()->first();
+            $userId = $this->faker->randomElement($userIds);
+            $beerId = $this->faker->randomElement($beerIds);
 
-            $exists = \App\Models\Review::where('user_id', $user->id)
-                ->where('beer_id', $beer->id)
-                ->exists();
+            $pair = "{$userId}-{$beerId}";
+
+            $exists = in_array($pair, $usedPairs) || Review::where('user_id', $userId)->where('beer_id', $beerId)->exists();
         } while ($exists);
+
+        $usedPairs[] = $pair;
 
         return [
             'note' => $this->faker->numberBetween(1, 5),
             'description' => $this->faker->unique()->sentence(10),
-            'user_id' => $user->id,
-            'beer_id' => $beer->id,
+            'user_id' => $userId,
+            'beer_id' => $beerId,
         ];
     }
 }
