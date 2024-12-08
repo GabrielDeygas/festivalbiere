@@ -4,10 +4,14 @@
 
 @section('content')
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-6">Beers</h1>
+        <div class="w-full h-50 bg-black">
+            <img src="{{ asset('storage/banneer.png') }}" alt="Bannière Bière Festival" class="w-full">
+        </div>
+        <h1 class="text-3xl font-bold mt-6 mb-6">Nos bières</h1>
 
         <form method="GET" action="{{ route('home') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <input type="text" name="name" value="{{ request('name') }}" placeholder="Beer name" class="p-2 border rounded">
+            <input type="text" name="name" value="{{ request('name') }}" placeholder="Nom de la bière"
+                class="p-2 border rounded">
 
             <select name="origin" class="p-2 border rounded">
                 <option value="">Tout pays</option>
@@ -37,32 +41,35 @@
             </select>
 
             <div class="flex gap-2">
-                <button type="submit" class="p-2 bg-blue-500 text-white rounded">Filtrer</button>
+                <button type="submit" class="p-2 bg-orange-400 text-white rounded">Filtrer</button>
             </div>
         </form>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($beers as $beer)
                 <div class="bg-white p-4 rounded-lg shadow">
-                   
-                    @if ($beer->img)
-                        <img src="{{ Storage::url($beer->img) }}" alt="Image of {{ $beer->name }}" class="w-full h-48 object-cover rounded-lg mb-4">
-                    @else
-                        <img src="{{ asset('images/default-beer.jpg') }}" alt="Default Image" class="w-full h-48 object-cover rounded-lg mb-4">
-                    @endif
-        
-                    <h2 class="text-xl font-semibold">
-                        <a href="{{ route('beer.show', $beer->id) }}" class="text-blue-500 hover:underline">
+                    <a href="{{ route('beer.show', $beer->id) }}">
+
+
+                        @if ($beer->img)
+                            <img src="{{ Storage::url($beer->img) }}" alt="Image of {{ $beer->name }}"
+                                class="w-full h-48 object-cover rounded-lg mb-4">
+                        @else
+                            <img src="{{ asset('images/default-beer.jpg') }}" alt="Default Image"
+                                class="w-full h-48 object-cover rounded-lg mb-4">
+                        @endif
+
+                        <h2 class="text-xl text-orange-600 font-semibold">
                             {{ $beer->name }}
-                        </a>
-                    </h2>
-                    <p class="text-gray-600">Type: {{ $beer->type }}</p>
-                    <p class="text-gray-600">Category: {{ $beer->category }}</p>
-                    <p class="text-gray-600">Origin: {{ $beer->country->name ?? 'N/A' }}</p>
+                        </h2>
+                        <p class="text-gray-600">Type: {{ $beer->type }}</p>
+                        <p class="text-gray-600">Categorie: {{ $beer->category }}</p>
+                        <p class="text-gray-600">Origine: {{ $beer->country->name ?? 'Non renseigné' }}</p>
+                    </a>
                 </div>
             @endforeach
         </div>
-        
+
 
         <div class="mt-6">
             {{ $beers->links() }}

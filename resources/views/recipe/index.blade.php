@@ -8,7 +8,7 @@
         Ajouter une nouvelle recette
     </a>
 
-    <form method="GET" action="{{ route('recipe.index') }}" class="mb-6">
+    <form method="GET" action="{{ route('recipe.index') }}" class="mt-6 mb-6">
         <input
             type="text"
             name="search"

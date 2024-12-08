@@ -13,8 +13,8 @@
             <h1 class="text-3xl font-bold mb-4">{{ $beer->name }}</h1>
             <p class="text-gray-600 mb-2"><strong>Type:</strong> {{ $beer->type }}</p>
             <p class="text-gray-600 mb-2"><strong>Categorie:</strong> {{ $beer->category }}</p>
-            <p class="text-gray-600 mb-2"><strong>Origine:</strong> {{ $beer->country->name ?? 'N/A' }}</p>
-            <p class="text-gray-600 mb-2"><strong>Description:</strong> {{ $beer->description ?? 'No description available.' }}</p>
+            <p class="text-gray-600 mb-2"><strong>Origine:</strong> {{ $beer->country->name ?? 'Non renseigné' }}</p>
+            <p class="text-gray-600 mb-2"><strong>Description:</strong> {{ $beer->flavor ?? 'Non renseigné' }}</p>
 
             <p class="text-gray-600 mb-2"><strong>Nombre d'avis:</strong> {{ $reviewCount }}</p>
 
@@ -79,7 +79,7 @@
             </div>
             @endif
         @else
-            <p class="text-gray-600 mt-6">
+            <p class="text-lg text-red-600 font-bold mt-6">
                 Il faut vous connecter afin de mettre une note.
             </p>
         @endauth
