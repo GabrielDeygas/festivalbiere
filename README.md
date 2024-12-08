@@ -24,22 +24,22 @@ git clone <url_du_dépôt>
 cd <nom_du_projet>
 ```
 
-### 2. Installer dépendances PHP
+### 2. Configuration du .env
+
+Modifier le .env.example en .env et configurer ses creds
+
+
+### 3. Installer dépendances PHP
 
 ```bash
 composer install
 ```
 
-### 3. Installation des dépendances front
+### 4. Installation des dépendances front
 
 ```bash
 npm install
 ```
-
-
-### 4. Configuration du .env
-
-Modifier le .env.example en .env et configurer ses creds
 
 ### 5. Générer une clé d'application
 
